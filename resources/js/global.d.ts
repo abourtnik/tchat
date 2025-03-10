@@ -1,5 +1,4 @@
 import { UserType } from "@/types";
-import { Alpine as AlpineType } from 'alpinejs'
 
 declare global {
     interface Window {
@@ -10,6 +9,5 @@ declare global {
         Pusher : any
         Echo : any
         CHAT_CHANNEL: any;
-        Alpine: AlpineType
     }
 }
