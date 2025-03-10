@@ -1,0 +1,32 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "bunx --bun vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.0.9",
+        "@types/alpinejs": "^3.13.11",
+        "@types/react": "^19.0.9",
+        "@types/react-dom": "^19.0.3",
+        "@vitejs/plugin-react": "^4.3.4",
+        "laravel-vite-plugin": "^1.2.0",
+        "sass": "^1.85.1",
+        "tailwindcss": "^4.0.9",
+        "typescript": "^5.7.3",
+        "vite": "^6.0.0"
+    },
+    "dependencies": {
+        "@tanstack/react-query": "^5.67.1",
+        "alpinejs": "^3.14.8",
+        "clsx": "^2.1.1",
+        "immer": "^10.1.1",
+        "laravel-echo": "^2.0.2",
+        "pusher-js": "^8.4.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-intersection-observer": "^9.16.0",
+        "zod": "^3.24.2"
+    }
+}

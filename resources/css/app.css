@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@source "../views";
+
+@theme {
+    --color-midnight: #6581B7;
+}
+
+#messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+#messages::-webkit-scrollbar-track  {
+    border-radius: 3px;
+    background-color: oklch(0.967 0.003 264.542);
+}
+
+#messages::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: oklch(0.872 0.01 258.338);
+}
+
+
