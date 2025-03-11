@@ -19,4 +19,11 @@
     background-color: oklch(0.872 0.01 258.338);
 }
 
+html, body {
+    overflow-x: hidden;
+}
+body {
+    position: relative;
+}
+
 
