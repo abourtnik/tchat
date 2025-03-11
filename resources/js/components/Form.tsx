@@ -33,7 +33,7 @@ export function Form () {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="h-16 bg-white flex relative bottom-0 w-full items-center justify-center content-between gap-3 border-t border-gray-300 p-3">
+        <form onSubmit={handleSubmit} className="h-16 bg-white flex sticky bottom-0 w-full items-center justify-center content-between gap-3 border-t border-gray-300 p-3">
             <div className={'flex w-full border border-gray-300 rounded-sm'}>
                 <input
                     type="text"
