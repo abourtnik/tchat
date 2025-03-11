@@ -19,4 +19,10 @@
     background-color: oklch(0.872 0.01 258.338);
 }
 
+body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
 

@@ -30,7 +30,7 @@ export default function App () {
                         'hidden': !isOpen,
                     })
                     }>
-                    <div className="h-16 bg-midnight text-white flex items-center justify-between px-3 border-b border-gray-300">
+                    <div className="h-16 bg-midnight text-white flex items-center justify-between px-3 border-b border-gray-300 sticky top-0">
                         <h2 className="text-lg font-semibold">{window.APP.name}</h2>
                         <button className={'cursor-pointer'} onClick={() => setIsOpen(false)}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
