@@ -19,10 +19,13 @@
     background-color: oklch(0.872 0.01 258.338);
 }
 
-body {
+html {
+    overflow: hidden;
     width: 100%;
+}
+body {
     height: 100%;
-    position: relative;
+    -webkit-overflow-scrolling: touch;
 }
 
 
