@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Authenticated;
-use Illuminate\Auth\Events\Logout;
 use Illuminate\Events\Dispatcher;
 
 class UserEventSubscriber
@@ -13,13 +12,12 @@ class UserEventSubscriber
      */
 
     public function handleUserAuth(Authenticated $event): void {
-    }
-
-    /**
-     * Handle user logout events.
-     */
-    public function handleUserLogout(Logout $event): void {
-
+        $event->user->update([
+            'last_login_at' => now(),
+            'last_login_ip' => request()->getClientIp(),
+            'connected' => true,
+            'user_agent' => request()->userAgent()
+        ]);
     }
 
     /**
@@ -31,7 +29,6 @@ class UserEventSubscriber
     {
         return [
             Authenticated::class => 'handleUserAuth',
-            Logout::class => 'handleUserLogout'
         ];
     }
 }

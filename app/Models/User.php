@@ -37,6 +37,9 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'banned_at' => 'datetime',
+            'last_login_at' => 'datetime',
+            'connected' => 'boolean',
         ];
     }
 
@@ -55,7 +58,14 @@ class User extends Authenticatable
     protected function avatar(): Attribute
     {
         return Attribute::make(
-            get: fn () => "https://api.dicebear.com/9.x/avataaars/svg?backgroundColor=b6e3f4,c0aede,d1d4f9&backgroundType=solid&seed=" .$this->username
+            get: fn () => "https://api.dicebear.com/9.x/avataaars/svg?backgroundColor=b6e3f4,c0aede,d1d4f9&backgroundType=solid&seed=" .$this->id
+        );
+    }
+
+    protected function isBanned(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => !is_null($this->banned_at)
         );
     }
 }

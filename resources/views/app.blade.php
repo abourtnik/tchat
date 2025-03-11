@@ -30,7 +30,7 @@
     @viteReactRefresh
     @vite(['resources/js/main.tsx'])
 </head>
-<body>
+<body class="relative overflow-x-hidden h-full">
     <div id="app"></div>
     <script type="text/javascript">
         window.USER = {!! Auth::check() ? Auth::user()->json  : 'null' !!}

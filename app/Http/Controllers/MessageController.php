@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\NewMessage;
-use App\Http\Requests\StoreMessage;
+use App\Http\Requests\StoreMessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
 use Illuminate\Http\Request;
@@ -43,7 +43,7 @@ class MessageController extends Controller
         );
     }
 
-    public function send(StoreMessage $request) : MessageResource
+    public function send(StoreMessageRequest $request) : MessageResource
     {
         $validated = $request->safe()->merge([
             'user_id' => Auth::id()

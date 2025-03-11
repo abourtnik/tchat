@@ -19,7 +19,8 @@ export function User ({user} : Props) {
                 })}
             />
             <span
-                className={clsx("text-sm font-medium", {
+                id={'user-' + user.id}
+                className={clsx("text-sm font-medium break-all px-2 text-center", {
                     "text-red-500": isCurrentUser,
                 })}
             >

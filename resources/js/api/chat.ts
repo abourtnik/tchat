@@ -10,3 +10,7 @@ export async function getMessages(page: number = 1): Promise<Paginator<MessageTy
 export async function sendMessage(data : MessageData): Promise<MessageType> {
     return jsonFetch(API_URL + `/messages/send`, 'POST', data);
 }
+
+export async function updateUser(data : {username : string}): Promise<{username: string}> {
+    return jsonFetch(API_URL + `/user/update`, 'POST', data);
+}
