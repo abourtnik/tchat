@@ -94,7 +94,7 @@ export function Messages () {
             }
             {
                 messages &&
-                <ul className="p-2">
+                <ul className="px-2 pt-4">
                     {messages.pages.map((group, i) => (
                         <Fragment key={i}>
                             {group.data.map((message) => <Message key={message.id} message={message} />)}
