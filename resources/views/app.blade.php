@@ -31,7 +31,7 @@
     @vite(['resources/js/main.tsx'])
 </head>
 <body>
-    <div id="app" class="relative overflow-auto h-full"></div>
+    <div id="app"></div>
     <script type="text/javascript">
         window.USER = {!! Auth::check() ? Auth::user()->json  : 'null' !!}
         window.APP = {

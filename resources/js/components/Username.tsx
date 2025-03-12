@@ -29,14 +29,18 @@ export function Username () {
 
         const data = Object.fromEntries(formData.entries()) as Data;
 
-        mutate(data);
+        if (data.username !== username) {
+            mutate(data);
+        } else {
+            setEdit(false);
+        }
     }
 
     return (
         <Fragment>
             {
                 edit &&
-                <form onSubmit={handleSubmit} className={'flex w-full border border-gray-200 rounded-sm'}>
+                <form onSubmit={handleSubmit} className={'flex border border-gray-200 rounded-sm w-60'}>
                     <input type={'text'} name={'username'} className={'block w-full px-2 py-1 bg-gray-50 text-black'} defaultValue={username} required maxLength={50}/>
                     <button
                         className={'px-2 py-1 border-l border-gray-200 font-medium bg-white text-gray-700 hover:bg-green-100 cursor-pointer'}
