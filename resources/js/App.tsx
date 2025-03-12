@@ -23,7 +23,7 @@ export default function App () {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <div className={'flex h-screen'}>
+            <div className={'flex h-dvh'}>
                 <div
                     className={clsx('flex-col bg-white transform transition-transform', {
                         'hidden lg:w-1/8 lg:flex': isOpen,
@@ -46,7 +46,7 @@ export default function App () {
                         'w-full': !isOpen,
                     })}
                 >
-                    <div className="h-16 bg-white flex items-center justify-between px-3 border-b border-gray-300">
+                    <div className="h-16 bg-white flex items-center justify-between p-3 border-b border-gray-300">
                         <div className={'flex items-center gap-3'}>
                             {
                                 !isOpen &&

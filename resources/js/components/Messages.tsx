@@ -59,7 +59,7 @@ export function Messages () {
     }, [inView]);
 
     return (
-        <div ref={messagesRef} id={'messages'} className={'bg-gray-200 overflow-y-auto'} style={{height: 'calc(100% - 128px)'}}>
+        <div ref={messagesRef} id={'messages'} className={'bg-gray-200 overflow-y-auto'}>
             {hasPreviousPage && <span ref={ref}></span>}
             {
                 isFetchingPreviousPage &&
