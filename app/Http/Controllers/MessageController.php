@@ -6,6 +6,7 @@ use App\Events\NewMessage;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,8 @@ class MessageController extends Controller
         broadcast(new NewMessage($message))->toOthers();
 
         Cache::forget('messages.count');
+
+        RateLimiter::increment('send-message:'. Auth::id());
 
         return new MessageResource($message);
     }

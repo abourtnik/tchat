@@ -2,6 +2,7 @@ import {FormEvent, Fragment, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {updateUser} from "@/api/chat";
 import {Loader} from "@/components/Loader";
+import { toast } from "@/functions/toast"
 
 type Data = {
     username: string
@@ -18,6 +19,9 @@ export function Username () {
             setEdit(false)
             setUsername(data.username)
             document.getElementById('user-' + window.USER.id)!.innerText = data.username;
+        },
+        onError (error: any) {
+            toast(error.message)
         }
     });
 

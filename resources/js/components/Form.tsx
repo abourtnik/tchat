@@ -1,10 +1,12 @@
 import {useMutation,} from "@tanstack/react-query";
 import {sendMessage} from "@/api/chat";
-import {FormEvent, useRef} from "react";
-import { MessageData, MessageDataSchema} from "@/types";
+import {ChangeEvent, FormEvent, useRef} from "react";
+import {MessageData, MessageDataSchema} from "@/types";
 import {Loader} from "@/components/Loader";
 import {clsx} from "clsx";
 import {useMessages} from "@/hooks/useMessages";
+import { toast } from "@/functions/toast"
+import {Typing} from "@/components/Typing";
 
 export function Form () {
 
@@ -12,12 +14,17 @@ export function Form () {
 
     const input = useRef<HTMLInputElement>(null);
 
+    let typing = false;
+
     const {mutate, isPending} = useMutation({
         mutationFn: (data: MessageData) => sendMessage(data),
         mutationKey: ['message.send'],
         onSuccess: (message) => {
             addMessage(message);
             input.current!.value = '';
+        },
+        onError (error: Error) {
+            toast(error.message)
         }
     });
 
@@ -32,19 +39,34 @@ export function Form () {
         mutate(MessageDataSchema.parse(data))
     }
 
+    const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+
+        const value = event.currentTarget.value;
+
+        if (!typing && value.length > 0 ) {
+            typing = true;
+            window.CHAT_CHANNEL.whisper('typing', window.USER);
+        } else if (value.length === 0) {
+            typing = false
+            window.CHAT_CHANNEL.whisper('stop_typing', window.USER);
+        }
+    }
+
     return (
-        <form onSubmit={handleSubmit} className="h-16 bg-white flex relative bottom-0 w-full items-center justify-center content-between gap-3 border-t border-gray-300 p-3">
-            <div className={'flex w-full border border-gray-300 rounded-sm'}>
-                <input
-                    type="text"
-                    className={'block w-full border-gray-100 p-2 bg-gray-50'}
-                    placeholder={'Type a message ..'}
-                    name={'content'}
-                    required
-                    ref={input}
-                    maxLength={255}
-                />
-               {/* <label
+        <div className={'h-22 bg-white border-t border-gray-300 px-3 pt-6 w-full relative bottom-0'}>
+            <form onSubmit={handleSubmit} className="flex items-center justify-center content-between gap-3 ">
+                <div className={'flex w-full border border-gray-300'}>
+                    <input
+                        type="text"
+                        className={'block w-full p-2 bg-gray-50'}
+                        placeholder={'Type a message ..'}
+                        name={'content'}
+                        required
+                        ref={input}
+                        maxLength={255}
+                        onChange={handleChange}
+                    />
+                    {/* <label
                     className="p-2 border-l border-gray-200 font-medium bg-white text-gray-700 hover:bg-gray-100 cursor-pointer">
                     <input type="file" className={'hidden h-full w-full'} onChange={handleFileChange}/>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -55,16 +77,19 @@ export function Form () {
                               d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/>
                     </svg>
                 </label>*/}
-            </div>
+                </div>
 
-            <button
-                type={'submit'}
-                className={clsx('text-white font-medium rounded-sm text-sm px-5 py-2.5 text-center inline-flex items-center gap-2', isPending && 'bg-blue-400 cursor-not-allowed', !isPending && 'cursor-pointer bg-midnight hover:bg-blue-800')}
-                disabled={isPending}
-            >
-                {isPending && <Loader size={'sm'}/>}
-                <span>Send</span>
-            </button>
-        </form>
+                <button
+                    type={'submit'}
+                    className={clsx('text-white font-medium rounded-sm text-sm px-5 py-2.5 text-center inline-flex items-center gap-2', isPending && 'bg-blue-400 cursor-not-allowed', !isPending && 'cursor-pointer bg-midnight hover:bg-blue-800')}
+                    disabled={isPending}
+                >
+                    {isPending && <Loader size={'sm'}/>}
+                    <span>Send</span>
+                </button>
+            </form>
+            <Typing/>
+        </div>
+
     )
 }

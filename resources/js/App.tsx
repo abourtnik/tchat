@@ -5,6 +5,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {useState} from "react";
 import {clsx} from "clsx";
 import {Username} from "@/components/Username";
+import { Toaster } from "@/components/ui/sonner"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -69,6 +70,7 @@ export default function App () {
                     <Form/>
                 </div>
             </div>
+            <Toaster position="top-center" visibleToasts={1} toastOptions={{closeButton: true}} />
         </QueryClientProvider>
     );
 }
