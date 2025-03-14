@@ -46,9 +46,10 @@ class MessageController extends Controller
 
     public function send(StoreMessageRequest $request) : MessageResource
     {
-        $validated = $request->safe()->merge([
-            'user_id' => Auth::id()
-        ])->toArray();
+        $validated = $request->safe()
+            ->merge(['user_id' => Auth::id()])
+            ->merge($this->storeFile($request))
+            ->toArray();
 
         $message = Message::query()->create($validated);
 
@@ -59,5 +60,20 @@ class MessageController extends Controller
         RateLimiter::increment('send-message:'. Auth::id());
 
         return new MessageResource($message);
+    }
+
+    private function storeFile (StoreMessageRequest $request) : array
+    {
+        $file = $request->file('file');
+
+        if (!$file) {
+            return [];
+        }
+
+        return [
+            'file' => $file->store('files', 'public'),
+            'file_type' => $file->getClientMimeType(),
+            'file_size' => $file->getSize()
+        ];
     }
 }

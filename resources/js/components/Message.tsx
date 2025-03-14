@@ -1,5 +1,6 @@
 import {MessageType} from "@/types";
 import {clsx} from "clsx";
+import {cn} from "@/lib/utils";
 
 type Props = {
     message: MessageType
@@ -22,14 +23,16 @@ export function Message ({message} : Props) {
             >
                 <img src={message.user.avatar} alt="" className="rounded-full w-8"/>
                 <div className={'flex flex-col gap-1'}>
-                    <p
-                        className={clsx("px-2 py-0.5 rounded border ", {
+                    <div
+                        className={cn('rounded ', {
                             "bg-white border-gray-300": isCurrentUser,
                             "bg-midnight border-gray-700 text-white": !isCurrentUser,
+                            "p-0 border-0 max-w-80": message.file,
                         })}
                     >
-                        {message.content}
-                    </p>
+                        {message.file && <img className={clsx('h-auto', message.content && 'rounded-t mb-1', !message.content && 'rounded')} src={message.file} alt=""/>}
+                        {message.content && <p className={'px-2 py-1'}>{message.content}</p>}
+                    </div>
                     <small className={'text-xs text-gray-500 text-right'}>{message.formated_date}</small>
                 </div>
             </div>

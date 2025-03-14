@@ -1,5 +1,5 @@
 import {jsonFetch} from '@/functions/api'
-import {Paginator, MessageData, MessageType} from "@/types";
+import {Paginator, MessageType} from "@/types";
 
 const API_URL =  '/api';
 
@@ -7,10 +7,16 @@ export async function getMessages(page: number = 1): Promise<Paginator<MessageTy
     return jsonFetch(API_URL + `/messages?page=${page}`);
 }
 
-export async function sendMessage(data : MessageData): Promise<MessageType> {
-    return jsonFetch(API_URL + `/messages/send`, 'POST', data);
+export async function sendMessage(data : FormData): Promise<MessageType> {
+    return jsonFetch(API_URL + `/messages/send`, {
+        method: 'POST',
+        body: data
+    });
 }
 
-export async function updateUser(data : {username : string}): Promise<{username: string}> {
-    return jsonFetch(API_URL + `/user/update`, 'POST', data);
+export async function updateUser(data : FormData): Promise<{username: string}> {
+    return jsonFetch(API_URL + `/user/update`, {
+        method: 'POST',
+        body: data
+    });
 }

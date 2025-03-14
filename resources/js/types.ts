@@ -13,10 +13,13 @@ export type Paginator<T> = {
 
 export type MessageType = {
     id: number,
-    content: string,
+    content: string | null,
     user : UserType
     date: Date,
     formated_date: string,
+    file?: string
+    file_type?: string,
+    file_size?: number,
 }
 
 export const MessageDataSchema = z.object({

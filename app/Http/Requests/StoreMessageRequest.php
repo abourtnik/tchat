@@ -23,7 +23,18 @@ class StoreMessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'content' => 'required|string|max:255',
+            'content' => [
+                'nullable',
+                'required_without:file',
+                'string',
+                'max:255'
+            ],
+            'file' => [
+                'required_without:content',
+                'file',
+                'mimes:jpeg,bmp,png,gif,svg,pdf',
+                'max:5120'
+            ]
         ];
     }
 }

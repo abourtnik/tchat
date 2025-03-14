@@ -27,6 +27,11 @@ class MessageResource extends JsonResource
             'user' => UserResource::make($this->user),
             'date' => $this->created_at,
             'formated_date' => $this->created_at->diffForHumans(['options' => Carbon::JUST_NOW]),
+            $this->mergeWhen($this->file, [
+                'file' => $this->file_path,
+                'file_type' => $this->file_type,
+                'file_size' => $this->file_size,
+            ])
         ];
     }
 }

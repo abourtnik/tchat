@@ -13,7 +13,7 @@ export function Username () {
     const [username, setUsername] = useState<string>(window.USER.username);
 
     const {mutate, isPending, isError, error} = useMutation({
-        mutationFn: (data: Data) => updateUser(data),
+        mutationFn: (data: FormData) => updateUser(data),
         mutationKey: ['user.update'],
         onSuccess: (data: Data) => {
             setEdit(false)
@@ -31,10 +31,8 @@ export function Username () {
 
         const formData = new FormData(event.currentTarget);
 
-        const data = Object.fromEntries(formData.entries()) as Data;
-
-        if (data.username !== username) {
-            mutate(data);
+        if (formData.get('username') !== username) {
+            mutate(formData);
         } else {
             setEdit(false);
         }
