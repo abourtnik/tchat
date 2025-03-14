@@ -22,6 +22,7 @@ export function Form () {
         onSuccess: (message) => {
             addMessage(message);
             input.current!.value = '';
+            window.CHAT_CHANNEL.whisper('stop_typing', window.USER);
         },
         onError (error: Error) {
             toast(error.message)

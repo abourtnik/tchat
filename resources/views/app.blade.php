@@ -37,10 +37,6 @@
         window.APP = {
             name : '{{config('app.name')}}',
         }
-
-        document.addEventListener("DOMContentLoaded", function(event) {
-            window.CHAT_CHANNEL = window.Echo.join(`chat`)
-        });
     </script>
 </body>
 </html>
