@@ -18,7 +18,6 @@ export function Username () {
         onSuccess: (data: Data) => {
             setEdit(false)
             setUsername(data.username)
-            document.getElementById('user-' + window.USER.id)!.innerText = data.username;
         },
         onError (error: any) {
             toast(error.message)
@@ -47,6 +46,7 @@ export function Username () {
                     <button
                         className={'px-2 py-1 border-l border-gray-200 font-medium bg-white text-gray-700 hover:bg-green-100 cursor-pointer'}
                         disabled={isPending}
+                        type={'submit'}
                     >
                         {isPending && <Loader size={'sm'}/>}
                         {
@@ -58,12 +58,13 @@ export function Username () {
                         }
                     </button>
                     <button
+                        type={'button'}
                         className={'px-2 py-1 border-l border-gray-200 font-medium bg-white text-gray-700 hover:bg-red-100 cursor-pointer'}
                         onClick={() => setEdit(false)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
                 </form>
             }
             {
