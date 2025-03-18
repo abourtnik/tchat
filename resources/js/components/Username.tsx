@@ -48,7 +48,16 @@ export function Username () {
             {
                 edit &&
                 <form onSubmit={handleSubmit} className={'flex border border-gray-200 rounded-sm w-60'}>
-                    <input onKeyDown={handleKeyDown} type={'text'} name={'username'} className={'block w-full px-2 py-1 bg-gray-50 text-black'} defaultValue={username} required maxLength={50}/>
+                    <input
+                        autoFocus={edit}
+                        onKeyDown={handleKeyDown}
+                        type={'text'}
+                        name={'username'}
+                        className={'block w-full px-2 py-1 bg-gray-50 text-black'}
+                        defaultValue={username}
+                        required
+                        maxLength={50}
+                    />
                     <button
                         className={'px-2 py-1 border-l border-gray-200 font-medium bg-white text-gray-700 hover:bg-green-100 cursor-pointer'}
                         disabled={isPending}

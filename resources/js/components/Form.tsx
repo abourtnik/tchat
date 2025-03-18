@@ -66,6 +66,7 @@ export function Form () {
                             ref={input}
                             maxLength={255}
                             onChange={handleChange}
+                            autoFocus={true}
                         />
                     </form>
                     <ImageUpload/>
