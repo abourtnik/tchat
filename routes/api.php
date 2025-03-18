@@ -12,6 +12,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(MessageController::class)->prefix('messages')->name('messages.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/send', 'send')->name('send')->can('create', Message::class);
+        Route::delete('/{message}', 'delete')->name('delete')->can('delete', 'message');
     });
 
     // USERS

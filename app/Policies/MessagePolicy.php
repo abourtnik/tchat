@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\RateLimiter;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\RateLimiter;
 class MessagePolicy
 {
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user can create message.
      */
     public function create(User $user):  Response
     {
@@ -23,5 +24,15 @@ class MessagePolicy
         return !$user->is_banned
             ? Response::allow()
             : Response::deny( 'Your account is banned');
+    }
+
+    /**
+     * Determine whether the user can delete models.
+     */
+    public function delete(User $user, Message $message):  Response
+    {
+        return $message->user()->is($user)
+            ? Response::allow()
+            : Response::deny( 'Your are not allowed to delete this message');
     }
 }

@@ -12,7 +12,7 @@ export function Messages () {
     const { ref, inView} = useInView()
     const messagesRef = useRef<HTMLDivElement>(null);
 
-    const {addMessage} = useMessages();
+    const {addMessage, removeMessage} = useMessages();
 
     const {
         data: messages,
@@ -35,6 +35,9 @@ export function Messages () {
         window.CHAT_CHANNEL
             .listen('.message.new', (message: MessageType) => {
                 addMessage(message);
+            })
+            .listen('.message.deleted', (message: MessageType) => {
+                removeMessage(message.id);
             })
     }, []);
 

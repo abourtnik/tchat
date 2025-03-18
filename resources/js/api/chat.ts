@@ -20,3 +20,9 @@ export async function updateUser(data : FormData): Promise<{username: string}> {
         body: data
     });
 }
+
+export async function deleteMessage(id : number): Promise<void> {
+    return jsonFetch(API_URL + `/messages/${id}`, {
+        method: 'DELETE'
+    });
+}

@@ -19,7 +19,22 @@ export function useMessages() {
         );
     };
 
+    const removeMessage = (id: number) => {
+        queryClient.setQueriesData(
+            { queryKey: ["messages"] },
+            (oldData: InfiniteData<Paginator<MessageType>> | undefined) => {
+                if (!oldData) return undefined;
+                return produce(oldData, draft => {
+                    draft.pages.forEach(page => {
+                        page.data = page.data.filter(m => m.id !== id);
+                    });
+                });
+            }
+        );
+    };
+
     return {
         addMessage,
+        removeMessage
     };
 }

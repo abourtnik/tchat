@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageDeleted;
 use App\Events\NewMessage;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -60,6 +62,15 @@ class MessageController extends Controller
         RateLimiter::increment('send-message:'. Auth::id());
 
         return new MessageResource($message);
+    }
+
+    public function delete(Message $message) : Response
+    {
+        $message->delete();
+
+        broadcast(new MessageDeleted($message))->toOthers();
+
+        return response()->noContent();
     }
 
     private function storeFile (StoreMessageRequest $request) : array
