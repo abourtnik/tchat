@@ -1,11 +1,12 @@
 import {MessageType} from "@/types";
 import {clsx} from "clsx";
 import {cn} from "@/lib/utils";
+import {memo} from "react";
 
 type Props = {
     message: MessageType
 }
-export function Message ({message} : Props) {
+export const Message = memo(({message} : Props) => {
 
     const isCurrentUser = message.user.id === window.USER.id;
 
@@ -39,4 +40,4 @@ export function Message ({message} : Props) {
 
         </li>
     )
-}
+}, (prev, next) => prev.message.id === next.message.id)

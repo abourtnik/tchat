@@ -1,11 +1,12 @@
 import {UserType} from "@/types";
 import {clsx} from "clsx";
+import {memo} from "react";
 
 type Props = {
     user: UserType
 }
 
-export function User ({user} : Props) {
+export const User = memo(({user} : Props) => {
 
     const isCurrentUser = user.id === window.USER.id;
 
@@ -28,4 +29,4 @@ export function User ({user} : Props) {
             </span>
         </div>
     )
-}
+}, (prev, next) => prev.user.username === next.user.username)
