@@ -16,7 +16,7 @@ export const User = memo(({user} : Props) => {
                 src={user.avatar}
                 alt={'avatar ' + user.username}
                 className={clsx("rounded-full w-25", {
-                     "border-3 border-gray-700": isCurrentUser,
+                     "border-3 border-red-500": isCurrentUser,
                 })}
             />
             <span

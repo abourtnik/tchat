@@ -4,7 +4,6 @@ import {ChangeEvent, FormEvent, useRef} from "react";
 import {Loader} from "@/components/Loader";
 import {useMessages} from "@/hooks/useMessages";
 import { toast } from "@/functions/toast"
-import {Typing} from "@/components/Typing";
 import {ImageUpload} from "@/components/ImageUpload";
 import { Button } from "@/components/ui/button"
 
@@ -53,7 +52,7 @@ export function Form () {
 
 
     return (
-        <div className={'h-22 bg-white border-t border-gray-300 px-3 pt-6 w-full relative bottom-0'}>
+        <div className={'h-18 bg-white border-t border-gray-300 px-3 py-4 w-full relative bottom-0'}>
             <div className={'flex items-stretch justify-center content-between gap-3'}>
                 <div className={'flex w-full border border-gray-300 h-full'}>
                     <form id={'main-form'} onSubmit={handleSubmit} className="flex w-full">
@@ -76,7 +75,6 @@ export function Form () {
                     <span>Send</span>
                 </Button>
             </div>
-            <Typing/>
         </div>
     )
 }

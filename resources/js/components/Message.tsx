@@ -3,11 +3,12 @@ import {clsx} from "clsx";
 import {cn} from "@/lib/utils";
 import {memo, useState} from "react";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
-import {Button} from "@/components/ui/button";
+import {Button, buttonVariants} from "@/components/ui/button";
 import {useMutation} from "@tanstack/react-query";
 import {deleteMessage,} from "@/api/chat";
 import {toast} from "@/functions/toast";
 import {useMessages} from "@/hooks/useMessages";
+import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from "@/components/ui/alert-dialog"
 
 type Props = {
     message: MessageType
@@ -81,7 +82,29 @@ export const Message = memo(({message} : Props) => {
                                 <DropdownMenuContent side={"top"}>
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem asChild>
-                                            <Button disabled={isPending} onClick={() => mutate(message.id)} size={'sm'} variant={'ghost'} className={'w-full hover:ring-0'}>Delete</Button>
+                                            <AlertDialog>
+                                                <AlertDialogTrigger asChild={true}>
+                                                    <Button size={'sm'} variant={'ghost'} className={'w-full hover:ring-0'}>Delete</Button>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            This action cannot be undone. This will permanently delete this message for you and all other users.
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction
+                                                            disabled={isPending}
+                                                            onClick={() => mutate(message.id)}
+                                                            className={buttonVariants({ variant: "destructive" })}
+                                                        >
+                                                            Delete
+                                                        </AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                 </DropdownMenuContent>

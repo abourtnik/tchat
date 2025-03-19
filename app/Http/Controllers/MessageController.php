@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 
 class MessageController extends Controller
@@ -66,6 +67,10 @@ class MessageController extends Controller
 
     public function delete(Message $message) : Response
     {
+        if ($message->file) {
+            Storage::disk('public')->delete($message->file);
+        }
+
         $message->delete();
 
         broadcast(new MessageDeleted($message))->toOthers();

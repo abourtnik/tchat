@@ -6,6 +6,7 @@ import {MessageType} from "@/types";
 import {useMessages} from "@/hooks/useMessages";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import {useInView} from "react-intersection-observer";
+import {Typing} from "@/components/Typing";
 
 export function Messages () {
 
@@ -62,7 +63,7 @@ export function Messages () {
     }, [inView]);
 
     return (
-        <div ref={messagesRef} id={'messages'} className={'bg-gray-200 overflow-y-auto flex-1'}>
+        <div ref={messagesRef} id={'messages'} className={'bg-gray-200 overflow-y-auto flex-1 px-2 pt-4'}>
             {hasPreviousPage && <span ref={ref}></span>}
             {
                 isFetchingPreviousPage &&
@@ -97,7 +98,7 @@ export function Messages () {
             }
             {
                 messages &&
-                <ul className="px-2 pt-4">
+                <ul>
                     {messages.pages.map((group, i) => (
                         <Fragment key={i}>
                             {group.data.map((message) => <Message key={message.id} message={message} />)}
@@ -105,6 +106,7 @@ export function Messages () {
                     ))}
                 </ul>
             }
+            <Typing/>
         </div>
     )
 }

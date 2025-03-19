@@ -20,6 +20,7 @@ export function UsersProvider({ children }: { children: ReactNode }) {
     }
 
     const leaving = (user: UserType) => {
+        window.CHAT_CHANNEL.whisper('stop_typing', user);
         setUsers(users => users.filter(u => u.id !== user.id));
     }
 
