@@ -1,5 +1,5 @@
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogClose,} from "@/components/ui/dialog"
-import {ChangeEvent, FormEvent, useRef, useState} from "react";
+import {ChangeEvent, useRef, useState} from "react";
 import { Button } from "@/components/ui/button"
 import {useMutation} from "@tanstack/react-query";
 import {sendMessage} from "@/api/chat";
@@ -26,15 +26,9 @@ export function ImageUpload () {
         }
     });
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-
-        event.preventDefault();
-
-        const formData = new FormData(event.currentTarget);
-
-        formData.append('file', file as File, file?.name);
-
-        mutate(formData)
+    const handleSubmit = async (data: FormData) => {
+        data.append('file', file as File, file?.name);
+        mutate(data)
     }
 
     const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +59,7 @@ export function ImageUpload () {
                         <DialogTitle>Send image</DialogTitle>
                         <DialogDescription/>
                     </DialogHeader>
-                    <form id="my-form" onSubmit={handleSubmit} encType="multipart/form-data">
+                    <form id="my-form" action={handleSubmit} encType="multipart/form-data">
                         <div className="flex flex-col items-center gap-4">
                             {
                                 file &&

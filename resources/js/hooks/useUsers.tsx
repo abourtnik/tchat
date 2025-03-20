@@ -50,9 +50,9 @@ export function UsersProvider({ children }: { children: ReactNode }) {
 
 
     return (
-        <UsersContext.Provider value={{ users, setUsers }}>
+        <UsersContext value={{ users, setUsers }}>
             {children}
-        </UsersContext.Provider>
+        </UsersContext>
     );
 }
 

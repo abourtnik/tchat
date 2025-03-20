@@ -1,4 +1,4 @@
-import {FormEvent, Fragment, KeyboardEvent, useState} from "react";
+import {Fragment, KeyboardEvent, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {updateUser} from "@/api/chat";
 import {Loader} from "@/components/Loader";
@@ -12,7 +12,7 @@ export function Username () {
     const [edit, setEdit] = useState<boolean>(false);
     const [username, setUsername] = useState<string>(window.USER.username);
 
-    const {mutate, isPending, isError, error} = useMutation({
+    const {mutate, isPending} = useMutation({
         mutationFn: (data: FormData) => updateUser(data),
         mutationKey: ['user.update'],
         onSuccess: (data: Data) => {
@@ -24,14 +24,9 @@ export function Username () {
         }
     });
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-
-        event.preventDefault();
-
-        const formData = new FormData(event.currentTarget);
-
-        if (formData.get('username') !== username) {
-            mutate(formData);
+    const handleSubmit = async (data: FormData) => {
+        if (data.get('username') !== username) {
+            mutate(data);
         } else {
             setEdit(false);
         }
@@ -47,7 +42,7 @@ export function Username () {
         <Fragment>
             {
                 edit &&
-                <form onSubmit={handleSubmit} className={'flex border border-gray-200 rounded-sm w-60'}>
+                <form action={handleSubmit} className={'flex border border-gray-200 rounded-sm w-60'}>
                     <input
                         autoFocus={edit}
                         onKeyDown={handleKeyDown}

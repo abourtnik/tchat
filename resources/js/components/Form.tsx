@@ -1,6 +1,6 @@
 import {useMutation,} from "@tanstack/react-query";
 import {sendMessage} from "@/api/chat";
-import {ChangeEvent, FormEvent, useRef} from "react";
+import {ChangeEvent, useRef} from "react";
 import {Loader} from "@/components/Loader";
 import {useMessages} from "@/hooks/useMessages";
 import { toast } from "@/functions/toast"
@@ -28,13 +28,8 @@ export function Form () {
         }
     });
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-
-        event.preventDefault();
-
-        const formData = new FormData(event.currentTarget);
-
-        mutate(formData)
+    const handleSubmit = async (data: FormData) => {
+        mutate(data)
     }
 
     const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +50,7 @@ export function Form () {
         <div className={'h-18 bg-white border-t border-gray-300 px-3 py-4 w-full relative bottom-0'}>
             <div className={'flex items-stretch justify-center content-between gap-3'}>
                 <div className={'flex w-full border border-gray-300 h-full'}>
-                    <form id={'main-form'} onSubmit={handleSubmit} className="flex w-full">
+                    <form id={'main-form'} action={handleSubmit} className="flex w-full">
                         <input
                             type="text"
                             className={'block w-full p-2 bg-gray-50 text-gray-900'}
