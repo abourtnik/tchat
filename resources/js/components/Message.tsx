@@ -71,6 +71,9 @@ export const Message = memo(({message} : Props) => {
                             (isCurrentUser && hover) &&
                             <DropdownMenu onOpenChange={(open) => {
                                 menuOpen = open
+                                if (!open) {
+                                    setHover(false)
+                                }
                             }}>
                                 <DropdownMenuTrigger asChild>
                                     <button className={'hover:bg-gray-300 hover:rounded-full w-6 h-6 flex justify-center items-center'}>
