@@ -87,7 +87,7 @@ export const Message = memo(({message} : Props) => {
                                     {
                                         !message.is_media &&
                                         <a
-                                            className={clsx('p-2 flex items-center gap-4', isCurrentUser && 'bg-gray-300', !isCurrentUser && 'bg-sky-700')}
+                                            className={clsx('p-2 flex items-center gap-2', isCurrentUser && 'bg-gray-300', !isCurrentUser && 'bg-sky-700')}
                                             href={message.file}
                                             download={message.file_original_name}
                                         >
