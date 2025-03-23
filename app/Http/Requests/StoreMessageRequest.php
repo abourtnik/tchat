@@ -32,8 +32,7 @@ class StoreMessageRequest extends FormRequest
             'file' => [
                 'required_without:content',
                 'file',
-                'mimes:jpeg,bmp,png,gif,svg,pdf',
-                'max:5120'
+                'max:10240'
             ]
         ];
     }

@@ -9,6 +9,7 @@ import {deleteMessage,} from "@/api/chat";
 import {toast} from "@/functions/toast";
 import {useMessages} from "@/hooks/useMessages";
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from "@/components/ui/alert-dialog"
+import {formatSizeUnits} from "@/functions/size";
 
 type Props = {
     message: MessageType
@@ -64,7 +65,43 @@ export const Message = memo(({message} : Props) => {
                                 "p-0 border-0 max-w-80": message.file,
                             })}
                         >
-                            {message.file && <img className={clsx('h-auto', message.content && 'rounded-t mb-1', !message.content && 'rounded')} src={message.file} alt=""/>}
+                            {
+                                message.file &&
+                                <>
+                                    {
+                                        message.is_media &&
+                                        <div className={clsx(message.content && 'mb-1')}>
+                                            {
+                                                message.is_image &&
+                                                <img className={clsx('h-auto', message.content && 'rounded-t', !message.content && 'rounded')} src={message.file} alt=""/>
+                                            }
+                                            {
+                                                message.is_video &&
+                                                <video className={clsx('h-auto max-w-full', message.content && 'rounded-t', !message.content && 'rounded')} controls>
+                                                    <source src={message.file} type={message.file_type}/>
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            }
+                                        </div>
+                                    }
+                                    {
+                                        !message.is_media &&
+                                        <a
+                                            className={clsx('p-2 flex items-center gap-4', isCurrentUser && 'bg-gray-300', !isCurrentUser && 'bg-sky-700')}
+                                            href={message.file}
+                                            download={message.file_original_name}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+                                            </svg>
+                                            <div className={'flex flex-col gap-1'}>
+                                                <span className={'break-all'}>{message.file_original_name}</span>
+                                                <span className={clsx('text-xs', isCurrentUser && 'text-gray-500', !isCurrentUser && 'dark:text-red-500')}>{formatSizeUnits(message.file_size as number)} - {message.file_type}</span>
+                                            </div>
+                                        </a>
+                                    }
+                                </>
+                            }
                             {message.content && <p className={'px-2 py-1'}>{message.content}</p>}
                         </div>
                         {
@@ -76,9 +113,12 @@ export const Message = memo(({message} : Props) => {
                                 }
                             }}>
                                 <DropdownMenuTrigger asChild>
-                                    <button className={'hover:bg-gray-300 hover:rounded-full w-6 h-6 flex justify-center items-center'}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.0} stroke="currentColor" className="size-5">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"/>
+                                    <button
+                                        className={'hover:bg-gray-300 hover:rounded-full w-6 h-6 flex justify-center items-center'}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             strokeWidth={1.0} stroke="currentColor" className="size-5">
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                  d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"/>
                                         </svg>
                                     </button>
                                 </DropdownMenuTrigger>

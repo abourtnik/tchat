@@ -20,6 +20,10 @@ export type MessageType = {
     file?: string
     file_type?: string,
     file_size?: number,
+    file_original_name?: string,
+    is_image: boolean,
+    is_video: boolean,
+    is_media: boolean
 }
 
 export const MessageDataSchema = z.object({

@@ -14,6 +14,22 @@ class Message extends Model
 
     protected $guarded = ['id'];
 
+    const array IMAGES_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp'];
+    const array VIDEOS_MIME_TYPES = ['video/mp4', 'video/webm'];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_image' => 'boolean',
+            'is_video' => 'boolean'
+        ];
+    }
+
     public function user(): BelongsTo {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -22,6 +38,13 @@ class Message extends Model
     {
         return Attribute::make(
             get: fn () => asset('storage/'.$this->file)
+        );
+    }
+
+    protected function isMedia(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->is_image || $this->is_video
         );
     }
 

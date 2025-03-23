@@ -14,6 +14,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
 class MessageController extends Controller
@@ -89,7 +90,10 @@ class MessageController extends Controller
         return [
             'file' => $file->store('files', 'public'),
             'file_type' => $file->getClientMimeType(),
-            'file_size' => $file->getSize()
+            'file_size' => $file->getSize(),
+            'file_original_name' => Str::limit($file->getClientOriginalName(), 255),
+            'is_image' => in_array($file->getClientMimeType(), Message::IMAGES_MIME_TYPES),
+            'is_video' => in_array($file->getClientMimeType(), Message::VIDEOS_MIME_TYPES),
         ];
     }
 }

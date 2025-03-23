@@ -5,6 +5,10 @@ import {useMutation} from "@tanstack/react-query";
 import {sendMessage} from "@/api/chat";
 import {useMessages} from "@/hooks/useMessages";
 import {Loader} from "@/components/Loader";
+import {formatSizeUnits} from "@/functions/size";
+
+const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp'];
+const VIDEO_TYPES = ['video/mp4', 'video/webm'];
 
 export function ImageUpload () {
 
@@ -40,30 +44,54 @@ export function ImageUpload () {
         setOpen(true);
     }
 
+    const preview = (file && (IMAGE_TYPES.includes(file.type) || VIDEO_TYPES.includes(file.type))) ? URL.createObjectURL(file) : null;
 
     return (
         <>
-        <label
-            className="p-2 border-l border-gray-200 font-medium bg-white text-gray-700 hover:bg-gray-100 cursor-pointer">
-            <input type="file" className={'hidden h-full w-full'} onChange={handleFileChange} ref={input}/>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round"
-                      d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"/>
-                <path strokeLinecap="round" strokeLinejoin="round"
-                      d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"/>
-            </svg>
-        </label>
+            <label
+                className="p-2 border-l border-gray-200 font-medium bg-white text-gray-700 hover:bg-gray-100 cursor-pointer">
+                <input type="file" className={'hidden h-full w-full'} onChange={handleFileChange} ref={input}/>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                </svg>
+            </label>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>
-                        <DialogTitle>Send image</DialogTitle>
+                        <DialogTitle>Send file</DialogTitle>
                         <DialogDescription/>
                     </DialogHeader>
-                    <form id="my-form" action={handleSubmit} encType="multipart/form-data">
+                    <form id="my-form" action={handleSubmit}>
                         <div className="flex flex-col items-center gap-4">
                             {
-                                file &&
-                                <img className={'rounded h-auto max-w-full'} src={URL.createObjectURL(file)} alt="file"/>
+                                (file && preview) &&
+                                <>
+                                    {
+                                        IMAGE_TYPES.includes(file.type) &&
+                                        <img className={'rounded h-auto max-w-full'} src={preview} alt="file"/>
+                                    }
+                                    {
+                                        VIDEO_TYPES.includes(file.type) &&
+                                        <video className="rounded h-auto max-w-full" controls>
+                                            <source src={preview} type={file.type}/>
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    }
+                                </>
+                            }
+                            {
+                                (file && !preview) &&
+                                <div className={'bg-gray-200 border border-gray-300 p-4 rounded w-full flex flex-col items-center justify-center gap-4'}>
+                                    <div className={'flex flex-col items-center justify-center gap-1'}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-25">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/>
+                                        </svg>
+                                        <span className={'text-xs text-gray-500 break-all'}>{file.name}</span>
+                                    </div>
+                                    <div className={'flex flex-col items-center gap-1'}>
+                                        <span className={'text-xs text-gray-500'}>{formatSizeUnits(file.size)} - {file.type}</span>
+                                    </div>
+                                </div>
                             }
                             <input
                                 type="text"
