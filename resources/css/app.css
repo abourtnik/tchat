@@ -6,7 +6,8 @@
 @source "../views";
 
 @theme {
-    --color-midnight: #6581B7;
+    --color-midnight: #22254D;
+    --color-midnight-dark: #3f5887;
 }
 
 #messages::-webkit-scrollbar {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Parser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -45,6 +46,13 @@ class Message extends Model
     {
         return Attribute::make(
             get: fn () => $this->is_image || $this->is_video
+        );
+    }
+
+    protected function parsedContent(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Parser::applyParsers($this->content, ['links'])
         );
     }
 

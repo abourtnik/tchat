@@ -24,7 +24,7 @@ class MessageResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'content' => $this->content,
+            'content' => $this->parsed_content,
             'user' => UserResource::make($this->user),
             'date' => $this->created_at,
             'formated_date' => $this->created_at->diffForHumans(['options' => Carbon::JUST_NOW]),

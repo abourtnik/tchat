@@ -45,13 +45,13 @@ export const Message = memo(({message} : Props) => {
             onMouseLeave={() => !menuOpen && setHover(false)}
         >
             <div
-                className={clsx("flex gap-3 items-start mb-3 text", {
+                className={clsx("flex gap-3 items-start mb-3 text w-full", {
                     "flex-row-reverse": isCurrentUser,
                 })}
             >
                 <img src={message.user.avatar} alt="" className="rounded-full w-8"/>
                 <div
-                    className={'flex flex-col gap-1'}
+                    className={'flex flex-col gap-1 max-w-full md:max-w-9/10'}
                 >
                     <div
                         className={clsx("flex gap-2 items-center", {
@@ -87,7 +87,7 @@ export const Message = memo(({message} : Props) => {
                                     {
                                         !message.is_media &&
                                         <a
-                                            className={clsx('p-2 flex items-center gap-2', isCurrentUser && 'bg-gray-300', !isCurrentUser && 'bg-sky-700')}
+                                            className={clsx('p-2 flex items-center gap-2', isCurrentUser && 'bg-gray-300', !isCurrentUser && 'bg-midnight-dark')}
                                             href={message.file}
                                             download={message.file_original_name}
                                         >
@@ -102,7 +102,7 @@ export const Message = memo(({message} : Props) => {
                                     }
                                 </>
                             }
-                            {message.content && <p className={'px-2 py-1'}>{message.content}</p>}
+                            {message.content && <div dangerouslySetInnerHTML={{__html : message.content}} className={'px-2 py-1'}></div>}
                         </div>
                         {
                             (isCurrentUser && hover) &&
