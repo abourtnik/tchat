@@ -6,6 +6,7 @@ import {sendMessage} from "@/api/chat";
 import {useMessages} from "@/hooks/useMessages";
 import {Loader} from "@/components/Loader";
 import {formatSizeUnits} from "@/functions/size";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip"
 
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp'];
 const VIDEO_TYPES = ['video/mp4', 'video/webm'];
@@ -48,13 +49,24 @@ export function ImageUpload () {
 
     return (
         <>
-            <label
-                className="p-2 border-l border-gray-200 font-medium bg-white text-gray-700 hover:bg-gray-100 cursor-pointer">
-                <input type="file" className={'hidden h-full w-full'} onChange={handleFileChange} ref={input}/>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                </svg>
-            </label>
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <label
+                            className="p-2 border-l border-gray-200 font-medium bg-white text-gray-700 hover:bg-gray-100 cursor-pointer">
+                            <input type="file" className={'hidden h-full w-full'} onChange={handleFileChange}
+                                   ref={input}/>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                                 stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                            </svg>
+                        </label>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>Attach a file of 10MB maximum</p>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>

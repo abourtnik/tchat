@@ -21,9 +21,16 @@ class MessagePolicy
             return Response::denyWithStatus(429, 'You are sending messages too fast. Please wait '.$seconds.' seconds before trying again.');
         }
 
-        return !$user->is_banned
-            ? Response::allow()
-            : Response::deny( 'Your account is banned');
+        if (request()->has('file') && $user->uploaded_medias_size > 524288000) { // 500MB
+            return Response::deny( 'You have reached the maximum number of files you can upload');
+        }
+
+        if ($user->is_banned) {
+            return Response::deny( 'Your account is banned');
+        }
+
+        return Response::allow();
+
     }
 
     /**
