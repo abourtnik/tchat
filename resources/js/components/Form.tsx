@@ -1,13 +1,11 @@
 import {useMutation,} from "@tanstack/react-query";
 import {sendMessage} from "@/api/chat";
-import {ChangeEvent, useRef} from "react";
+import {ChangeEvent, FormEvent, useRef} from "react";
 import {Loader} from "@/components/Loader";
 import {useMessages} from "@/hooks/useMessages";
 import { toast } from "@/functions/toast"
 import {FileUpload} from "@/components/FileUpload";
 import { Button } from "@/components/ui/button"
-import {useIsMobile} from "@/hooks/use-mobile";
-
 export function Form () {
 
     const {addMessage} = useMessages();
@@ -15,8 +13,6 @@ export function Form () {
     const input = useRef<HTMLInputElement>(null);
 
     let typing = false;
-
-    const isMobile = useIsMobile();
 
     const {mutate, isPending} = useMutation({
         mutationFn: (data: FormData) => sendMessage(data),
@@ -31,8 +27,13 @@ export function Form () {
         }
     });
 
-    const handleSubmit = async (data: FormData) => {
-        mutate(data)
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+
+        mutate(formData)
     }
 
     const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +54,7 @@ export function Form () {
         <div className={'h-18 bg-white border-t border-gray-300 px-3 py-4 w-full relative bottom-0'}>
             <div className={'flex items-stretch justify-center content-between gap-3'}>
                 <div className={'flex w-full border border-gray-300 h-full focus:border-gray-700'}>
-                    <form id={'main-form'} action={handleSubmit} className="flex w-full">
+                    <form id={'main-form'} onSubmit={handleSubmit} className="flex w-full">
                         <input
                             type="text"
                             className={'block w-full p-2 bg-gray-50 text-gray-900 focus:outline-hidden'}
@@ -63,7 +64,7 @@ export function Form () {
                             ref={input}
                             maxLength={255}
                             onChange={handleChange}
-                            autoFocus={!isMobile}
+                            autoFocus={true}
                             autoComplete={'off'}
                         />
                     </form>

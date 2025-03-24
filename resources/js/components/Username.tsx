@@ -1,4 +1,4 @@
-import {Fragment, KeyboardEvent, useState} from "react";
+import {Fragment, KeyboardEvent, FormEvent, useState} from "react";
 import {useMutation} from "@tanstack/react-query";
 import {updateUser} from "@/api/chat";
 import {Loader} from "@/components/Loader";
@@ -24,9 +24,14 @@ export function Username () {
         }
     });
 
-    const handleSubmit = async (data: FormData) => {
-        if (data.get('username') !== username) {
-            mutate(data);
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+
+        if (formData.get('username') !== username) {
+            mutate(formData);
         } else {
             setEdit(false);
         }
@@ -42,7 +47,7 @@ export function Username () {
         <Fragment>
             {
                 edit &&
-                <form action={handleSubmit} className={'flex border border-gray-200 rounded-sm w-60'}>
+                <form onSubmit={handleSubmit} className={'flex border border-gray-200 rounded-sm w-60'}>
                     <input
                         autoFocus={edit}
                         onKeyDown={handleKeyDown}

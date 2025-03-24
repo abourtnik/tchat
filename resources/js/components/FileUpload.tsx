@@ -1,5 +1,5 @@
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogClose,} from "@/components/ui/dialog"
-import {ChangeEvent, useEffect, useRef, useState} from "react";
+import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
 import { Button } from "@/components/ui/button"
 import {useMutation} from "@tanstack/react-query";
 import {sendMessage} from "@/api/chat";
@@ -35,9 +35,15 @@ export function FileUpload () {
         }
     });
 
-    const handleSubmit = async (data: FormData) => {
-        data.append('file', file as File, file?.name);
-        mutate(data)
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+
+        formData.append('file', file as File, file?.name);
+
+        mutate(formData)
     }
 
     const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +63,6 @@ export function FileUpload () {
 
     useEffect(() => {
         if (!open && file) {
-            console.log('reset form');
             resetForm();
         }
     }, [open])
@@ -89,7 +94,7 @@ export function FileUpload () {
                         <DialogTitle>Send file</DialogTitle>
                         <DialogDescription/>
                     </DialogHeader>
-                    <form id="my-form" action={handleSubmit}>
+                    <form id="my-form" onSubmit={handleSubmit}>
                         <div className="flex flex-col items-center gap-4">
                             {
                                 (file && preview) &&
