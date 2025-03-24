@@ -8,15 +8,15 @@ export type ToastProps = {
 
 export function Toast({ title, description, id }: ToastProps) {
     return (
-        <div className="flex rounded-lg bg-white shadow-lg ring-1 ring-black/5 w-full md:max-w-[364px] items-center p-4 gap-4">
+        <div className="flex rounded-lg bg-destructive shadow-lg ring-1 ring-black/5 w-full md:max-w-[364px] items-center p-4 gap-4">
             <div className="flex flex-1 items-center">
                 <div className="w-full">
-                    <p className="text-sm font-medium text-gray-900">{title}</p>
+                    <p className="text-sm font-medium text-white">{title}</p>
                     {description && <p className="mt-1 text-sm text-gray-500">{description}</p>}
                 </div>
             </div>
             <button
-                className="text-gray-500 cursor-pointer"
+                className="text-white cursor-pointer"
                 onClick={() => sonnerToast.dismiss(id)}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}

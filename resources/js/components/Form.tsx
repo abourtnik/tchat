@@ -4,8 +4,9 @@ import {ChangeEvent, useRef} from "react";
 import {Loader} from "@/components/Loader";
 import {useMessages} from "@/hooks/useMessages";
 import { toast } from "@/functions/toast"
-import {ImageUpload} from "@/components/ImageUpload";
+import {FileUpload} from "@/components/FileUpload";
 import { Button } from "@/components/ui/button"
+import {useIsMobile} from "@/hooks/use-mobile";
 
 export function Form () {
 
@@ -14,6 +15,8 @@ export function Form () {
     const input = useRef<HTMLInputElement>(null);
 
     let typing = false;
+
+    const isMobile = useIsMobile();
 
     const {mutate, isPending} = useMutation({
         mutationFn: (data: FormData) => sendMessage(data),
@@ -49,21 +52,22 @@ export function Form () {
     return (
         <div className={'h-18 bg-white border-t border-gray-300 px-3 py-4 w-full relative bottom-0'}>
             <div className={'flex items-stretch justify-center content-between gap-3'}>
-                <div className={'flex w-full border border-gray-300 h-full'}>
+                <div className={'flex w-full border border-gray-300 h-full focus:border-gray-700'}>
                     <form id={'main-form'} action={handleSubmit} className="flex w-full">
                         <input
                             type="text"
-                            className={'block w-full p-2 bg-gray-50 text-gray-900'}
+                            className={'block w-full p-2 bg-gray-50 text-gray-900 focus:outline-hidden'}
                             placeholder={'Type a message ..'}
                             name={'content'}
                             required
                             ref={input}
                             maxLength={255}
                             onChange={handleChange}
-                            autoFocus={true}
+                            autoFocus={!isMobile}
+                            autoComplete={'off'}
                         />
                     </form>
-                    <ImageUpload/>
+                    <FileUpload/>
                 </div>
                 <Button className={'h-full py-2.5 rounded-none'} type={'submit'} form={'main-form'} disabled={isPending}>
                     {isPending && <Loader size={'sm'}/>}

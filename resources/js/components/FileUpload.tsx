@@ -1,5 +1,5 @@
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogClose,} from "@/components/ui/dialog"
-import {ChangeEvent, useRef, useState} from "react";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
 import { Button } from "@/components/ui/button"
 import {useMutation} from "@tanstack/react-query";
 import {sendMessage} from "@/api/chat";
@@ -7,11 +7,12 @@ import {useMessages} from "@/hooks/useMessages";
 import {Loader} from "@/components/Loader";
 import {formatSizeUnits} from "@/functions/size";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip"
+import {toast} from "@/functions/toast";
 
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp'];
 const VIDEO_TYPES = ['video/mp4', 'video/webm'];
 
-export function ImageUpload () {
+export function FileUpload () {
 
     const [open, setOpen] = useState<boolean>(false);
     const [file, setFile] = useState<File | null>(null);
@@ -20,6 +21,10 @@ export function ImageUpload () {
 
     const {addMessage} = useMessages();
 
+    const resetForm = () => {
+        input.current!.value = '';
+    }
+
     const {mutate, isPending, isError, error} = useMutation({
         mutationFn: (data: FormData) => sendMessage(data),
         mutationKey: ['message.send'],
@@ -27,7 +32,6 @@ export function ImageUpload () {
             addMessage(message);
             setFile(null);
             setOpen(false);
-            input.current!.value = '';
         }
     });
 
@@ -41,9 +45,22 @@ export function ImageUpload () {
 
         if (!file) return;
 
+        if (file.size > 10485760) {
+            toast('The file size must be less than 10MB');
+            resetForm();
+            return;
+        }
+
         setFile(file);
         setOpen(true);
     }
+
+    useEffect(() => {
+        if (!open && file) {
+            console.log('reset form');
+            resetForm();
+        }
+    }, [open])
 
     const preview = (file && (IMAGE_TYPES.includes(file.type) || VIDEO_TYPES.includes(file.type))) ? URL.createObjectURL(file) : null;
 
@@ -54,8 +71,7 @@ export function ImageUpload () {
                     <TooltipTrigger asChild>
                         <label
                             className="p-2 border-l border-gray-200 font-medium bg-white text-gray-700 hover:bg-gray-100 cursor-pointer">
-                            <input type="file" className={'hidden h-full w-full'} onChange={handleFileChange}
-                                   ref={input}/>
+                            <input type="file" className={'hidden h-full w-full'} onChange={handleFileChange} ref={input}/>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                                  stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
@@ -107,11 +123,12 @@ export function ImageUpload () {
                             }
                             <input
                                 type="text"
-                                className={'block w-full p-2 bg-gray-50 border border-gray-300'}
+                                className={'block w-full p-2 bg-gray-50 border border-gray-300 focus:outline-hidden'}
                                 placeholder={'Add a message ..'}
                                 name={'content'}
-                                ref={input}
                                 maxLength={255}
+                                autoComplete={'off'}
+                                autoFocus={open}
                             />
                         </div>
                     </form>
