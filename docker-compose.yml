@@ -39,7 +39,7 @@ services:
             - application
     reverb:
         container_name: reverb_container
-        image: clipzone/php
+        image: abourtnik/laravel
         working_dir: /var/www/html
         command: php artisan reverb:start --port=6001 --debug
         ports:

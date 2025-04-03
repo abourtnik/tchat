@@ -39,3 +39,7 @@ Desktop.ini
 
 # Compiled C++ files
 *.out
+
+# IDE Helper
+.phpstorm.meta.php
+_ide_helper.php

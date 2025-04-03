@@ -21,7 +21,7 @@ class MessageController extends Controller
 {
     public function index(Request $request): ResourceCollection
     {
-        $page = $request->query('page', 1);
+        $page = $request->integer('page', 1);
 
         $perPage = 15;
 

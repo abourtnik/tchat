@@ -18,7 +18,7 @@ class MessageResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @return array<string|int, mixed>
      */
     public function toArray(Request $request): array
     {
@@ -28,9 +28,9 @@ class MessageResource extends JsonResource
             'user' => UserResource::make($this->user),
             'date' => $this->created_at,
             'formated_date' => $this->created_at->diffForHumans(['options' => Carbon::JUST_NOW]),
-            $this->mergeWhen($this->file, [
+            $this->mergeWhen(!is_null($this->file), [
                 'file' => $this->file_path,
-                'is_media' =>$this->is_media,
+                'is_media' => $this->is_media,
                 'is_image' => $this->is_image,
                 'is_video' => $this->is_video,
                 'file_type' => $this->file_type,
