@@ -23,6 +23,8 @@ jobs:
         run: ./vendor/bin/phpstan analyse
   deploy:
     name: Deploy
+    needs: test
+    if: success()
     runs-on: ubuntu-latest
     environment: Production
     steps:
