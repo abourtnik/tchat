@@ -12,8 +12,10 @@ export function useMessages() {
                 if (!oldData) return undefined;
                 return produce(oldData, draft => {
                     draft.pages[draft.pages.length - 1].data.push(message);
-                    // @ts-ignore
-                    draft.pushed = true;
+                    if (!message.is_media) {
+                        // @ts-ignore
+                        draft.pushed = true;
+                    }
                 });
             }
         );

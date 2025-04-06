@@ -1,5 +1,5 @@
 import {getMessages} from "@/api/chat";
-import {Fragment, useEffect, useRef} from "react";
+import {Fragment, useEffect, useMemo, useRef} from "react";
 import {Message} from "@/components/Message";
 import {Loader} from "@/components/Loader";
 import {MessageType} from "@/types";
@@ -45,7 +45,7 @@ export function Messages () {
     useEffect(() => {
         // @ts-ignore
        if (messages && (messages.pushed || messages.pages.length === 1)) {
-           messagesRef.current!.scrollTop = messagesRef.current!.scrollHeight;
+
        }
     }, [messages]);
 
@@ -56,21 +56,15 @@ export function Messages () {
                 const previous = messagesRef.current!.scrollHeight;
                 await fetchPreviousPage();
                 setTimeout(() => {
-                    messagesRef.current!.scrollTop = messagesRef.current!.scrollHeight - previous;
+                    messagesRef.current!.scrollTop = -(previous - 400);
                 }, 0);
             })();
         }
     }, [inView]);
 
     return (
-        <div ref={messagesRef} id={'messages'} className={'bg-gray-200 overflow-y-auto flex-1 px-2 pt-4'}>
-            {hasPreviousPage && <span ref={ref}></span>}
-            {
-                isFetchingPreviousPage &&
-                <div className={'flex justify-center items-center mt-3'}>
-                    <Loader size={'sm'}/>
-                </div>
-            }
+        <div ref={messagesRef} id={'messages'} className={'bg-gray-200 overflow-y-auto flex-1 px-2 pt-4 h-full flex flex-col-reverse'}>
+            <Typing/>
             {
                 isLoading &&
                 <div className={'flex justify-center items-center h-full'}>
@@ -106,7 +100,13 @@ export function Messages () {
                     ))}
                 </ul>
             }
-            <Typing/>
+            {
+                isFetchingPreviousPage &&
+                <div className={'flex justify-center items-center mb-3'}>
+                    <Loader size={'sm'}/>
+                </div>
+            }
+            {hasPreviousPage && <span ref={ref}></span>}
         </div>
     )
 }
