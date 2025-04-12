@@ -51,7 +51,7 @@ export function Form () {
 
 
     return (
-        <div className={'h-18 bg-white border-t border-gray-300 px-3 py-4 w-full relative bottom-0'}>
+        <section className={'h-18 bg-white border-t border-gray-300 px-3 py-4 w-full relative bottom-0'}>
             <div className={'flex items-stretch justify-center content-between gap-3'}>
                 <div className={'flex w-full border border-gray-300 h-full focus:border-gray-700'}>
                     <form id={'main-form'} onSubmit={handleSubmit} className="flex w-full">
@@ -75,6 +75,6 @@ export function Form () {
                     <span>Send</span>
                 </Button>
             </div>
-        </div>
+        </section>
     )
 }

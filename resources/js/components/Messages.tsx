@@ -63,7 +63,7 @@ export function Messages () {
     }, [inView]);
 
     return (
-        <div ref={messagesRef} id={'messages'} className={'bg-gray-200 overflow-y-auto flex-1 px-2 pt-4 h-full flex flex-col-reverse'}>
+        <section ref={messagesRef} id={'messages'} className={'bg-gray-200 overflow-y-auto flex-1 px-2 pt-4 h-full flex flex-col-reverse'}>
             <Typing/>
             {
                 isLoading &&
@@ -107,6 +107,6 @@ export function Messages () {
                 </div>
             }
             {hasPreviousPage && <span ref={ref}></span>}
-        </div>
+        </section>
     )
 }
