@@ -43,8 +43,6 @@ install: ## Install application
 	docker exec -it php_container php artisan storage:link
 	docker exec -it php_container php artisan optimize
 	docker exec -it php_container php artisan cache:clear
-	docker compose down
-	make start
 
 deploy: ## Deploy application
 	git pull origin main
