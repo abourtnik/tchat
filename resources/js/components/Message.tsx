@@ -10,6 +10,7 @@ import {toast} from "@/functions/toast";
 import {useMessages} from "@/hooks/useMessages";
 import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from "@/components/ui/alert-dialog"
 import {formatSizeUnits} from "@/functions/size";
+import {ImagePreview} from "@/components/ImagePreview";
 
 type Props = {
     message: MessageType
@@ -73,7 +74,9 @@ export const Message = memo(({message} : Props) => {
                                         <div className={clsx(message.content && 'mb-1')}>
                                             {
                                                 message.is_image &&
-                                                <img className={clsx('h-auto', message.content && 'rounded-t', !message.content && 'rounded')} src={message.file} alt=""/>
+                                                <ImagePreview>
+                                                    <img className={clsx('h-auto', message.content && 'rounded-t', !message.content && 'rounded')} src={message.file} alt=""/>
+                                                </ImagePreview>
                                             }
                                             {
                                                 message.is_video &&
