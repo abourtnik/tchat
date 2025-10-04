@@ -34,7 +34,7 @@ install: ## Install application
 	cp .env.example .env
 	docker compose up -d
 	docker exec -it php_container composer install
-    docker exec -it php_container php artisan key:generate
+	docker exec -it php_container php artisan key:generate
 	docker exec -it php_container touch database/database.sqlite
 	docker exec -it php_container php artisan migrate
 	docker exec -it php_container php artisan db:seed
