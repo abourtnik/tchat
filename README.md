@@ -1,3 +1,7 @@
+<div align="center">
+![Screenshot of tchat](https://tchat.antonbourtnik.fr/screenshot.png)
+</div>
+
 ## 📦 Installation
 
 - Clone project
