@@ -1,5 +1,5 @@
 <div align="center">
-![Screenshot of tchat](https://tchat.antonbourtnik.fr/screenshot.png)
+<img src="https://tchat.antonbourtnik.fr/screenshot.png" alt="App Screenshot">
 </div>
 
 ## 📦 Installation
