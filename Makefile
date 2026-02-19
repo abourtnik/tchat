@@ -15,6 +15,8 @@ reset: ## Reset database and run seeders
 
 start: ## Start dev server
 	docker compose -p tchat up -d
+	@echo "\nDevelopment servers launched !\n"
+	@echo "🌏  Web: http://localhost:8080"
 
 stop: ## Stop dev server
 	docker compose -p tchat down
