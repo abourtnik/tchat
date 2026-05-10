@@ -26,11 +26,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: oven/bun
-    environment:
-      - VITE_REVERB_APP_KEY=KFsn3Bezr8LEoxpqxqfoT9Aj3sjM
-      - VITE_REVERB_WEBSOCKETS_HOST=tchat.antonbourtnik.fr
-      - VITE_REVERB_PORT=443
-      - VITE_REVERB_SCHEME=https
+    env:
+      VITE_REVERB_APP_KEY: KFsn3Bezr8LEoxpqxqfoT9Aj3sjM
+      VITE_REVERB_WEBSOCKETS_HOST: tchat.antonbourtnik.fr
+      VITE_REVERB_PORT: 443
+      VITE_REVERB_SCHEME: https
     steps:
       - uses: actions/checkout@v4
       - name: 📦 Install dependencies
