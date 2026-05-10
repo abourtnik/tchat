@@ -13,7 +13,7 @@ jobs:
       - name: 📦Install dependencies
         run: composer install --no-interaction --prefer-dist
       - name: ⚙️Run PHPStan
-        run: ./vendor/bin/phpstan analyse
+        run: ./vendor/bin/phpstan analyse --memory-limit=2G
   test:
     runs-on: ubuntu-latest
     container: abourtnik/laravel
