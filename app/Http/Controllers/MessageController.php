@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-
 class MessageController extends Controller
 {
     public function index(Request $request): ResourceCollection
