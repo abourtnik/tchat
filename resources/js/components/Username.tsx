@@ -9,8 +9,6 @@ type Data = {
 }
 export function Username () {
 
-    console.log('Test');
-
     const [edit, setEdit] = useState<boolean>(false);
     const [username, setUsername] = useState<string>(window.USER.username);
 

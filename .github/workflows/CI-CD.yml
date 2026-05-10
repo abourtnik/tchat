@@ -56,7 +56,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: public/build/
-          target: /home/anton/www/tchat.antonbourtnik.fr/public/
+          target: /home/anton/www/tchat.antonbourtnik.fr/public/build/
       - name: 🚀 Deploy updates
         uses: appleboy/ssh-action@v1.2.0
         with:
