@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     container: oven/bun
     env:
-      VITE_REVERB_APP_KEY: KFsn3Bezr8LEoxpqxqfoT9Aj3sjM
+      VITE_REVERB_APP_KEY:  ${{ vars.REVERB_APP_KEY }}
       VITE_REVERB_WEBSOCKETS_HOST: tchat.antonbourtnik.fr
       VITE_REVERB_PORT: 443
       VITE_REVERB_SCHEME: https
@@ -61,7 +61,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: public/build/*
-          target: /home/anton/www/tchat.antonbourtnik.fr/public/build/
+          target: ${{ secrets.SSH_PATH }}/public/build/
           strip_components: 2
       - name: 🚀 Deploy updates
         uses: appleboy/ssh-action@v1.2.0
@@ -71,5 +71,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /home/anton/www/tchat.antonbourtnik.fr
+            cd ${{ secrets.SSH_PATH }}
             make deploy

@@ -17,9 +17,9 @@ services:
         ports:
             - "8080:80"
         volumes:
-            - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
             - ./:/var/www/html
-        links:
+        depends_on:
             - php
         restart: unless-stopped
     bun:
@@ -34,7 +34,7 @@ services:
             - CHOKIDAR_USEPOLLING=true
             - CHOKIDAR_IGNORE_INITIAL=true
         #command: tail -f /dev/null
-        command: /bin/bash -c "if [ ! -d /var/www/node_modules ]; then bun install; fi && bun run dev"
+        command: /bin/bash -c "if [ ! -d node_modules ]; then bun install; fi && bun run dev"
         networks:
             - application
     reverb:
