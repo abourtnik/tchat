@@ -22,7 +22,7 @@ jobs:
       - name: 📦 Install dependencies
         run: composer install --no-interaction --prefer-dist
       - name: ⚙️ Run tests
-        run: php artisan test --env=ci --stop-on-failure
+        run: php artisan test --env=testing --stop-on-failure
   build:
     runs-on: ubuntu-latest
     container: oven/bun
