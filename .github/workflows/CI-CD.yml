@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     container: abourtnik/laravel
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: 📦 Install dependencies
         run: composer install --no-interaction --prefer-dist
       - name: ⚙️ Run PHPStan
@@ -18,14 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     container: abourtnik/laravel
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: 📦 Install dependencies
         run: composer install --no-interaction --prefer-dist
       - name: ⚙️ Run tests
         run: php artisan test --env=testing --stop-on-failure
   build:
     runs-on: ubuntu-latest
-    container: oven/bun
+    container: abourtnik/bun
     environment: Production
     env:
       VITE_REVERB_APP_KEY: ${{ vars.REVERB_APP_KEY }}
@@ -33,13 +33,13 @@ jobs:
       VITE_REVERB_PORT: 443
       VITE_REVERB_SCHEME: https
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: 📦 Install dependencies
         run: bun install
       - name: ⚙️ Build assets
         run: bun run build
       - name: ⬆️ Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: public-build
           path: public/build/
@@ -50,7 +50,7 @@ jobs:
     environment: Production
     steps:
       - name: ⬇️ Download build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: public-build
           path: public/build/
