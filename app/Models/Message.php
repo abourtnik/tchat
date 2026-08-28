@@ -18,7 +18,7 @@ class Message extends Model
 
     protected $guarded = ['id'];
 
-    const array IMAGES_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp'];
+    const array IMAGES_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     const array VIDEOS_MIME_TYPES = ['video/mp4', 'video/webm'];
 
     /**

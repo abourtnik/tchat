@@ -50,7 +50,7 @@ export const Message = memo(({message} : Props) => {
                     "flex-row-reverse": isCurrentUser,
                 })}
             >
-                <img src={message.user.avatar} alt="" className="rounded-full w-8"/>
+                <img src={message.user.avatar} alt="" className="rounded-full w-8" loading="lazy"/>
                 <div
                     className={'flex flex-col gap-1 max-w-full md:max-w-9/10'}
                 >
@@ -75,7 +75,7 @@ export const Message = memo(({message} : Props) => {
                                             {
                                                 message.is_image &&
                                                 <ImagePreview>
-                                                    <img className={clsx('h-auto', message.content && 'rounded-t', !message.content && 'rounded')} src={message.file} alt=""/>
+                                                    <img className={clsx('h-auto', message.content && 'rounded-t', !message.content && 'rounded')} src={message.file} alt="" loading="lazy"/>
                                                 </ImagePreview>
                                             }
                                             {
