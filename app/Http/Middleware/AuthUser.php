@@ -5,9 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use Closure;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Http\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthUser
@@ -22,11 +20,8 @@ class AuthUser
         Auth::viaRemember();
 
         if (Auth::guest()) {
-
             $user = User::factory()->create();
-
             Auth::login($user, true);
-
         }
 
         return $next($request);

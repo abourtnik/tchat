@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Listeners\UserEventSubscriber;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -23,7 +21,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Broadcast::routes();
-
-        Event::subscribe(UserEventSubscriber::class);
     }
 }

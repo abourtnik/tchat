@@ -18,12 +18,13 @@
     <meta property="og:title" content="{{config('app.name')}}" />
     <meta property="og:description" content="Free web chat" />
     <meta property="og:image" content={{asset('icon.png')}} />
-    <meta property="og:language" content="{{ str_replace('_', '-', app()->getLocale()) }}" />
+    <meta property="og:locale" content="{{ str_replace('_', '-', app()->getLocale()) }}" />
 
     <link rel="shortcut icon" href="{{asset('favicon.ico')}}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{asset('icon.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('icon.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('icon.png')}}">
+    <link rel="canonical" href="{{ url()->current() }}">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

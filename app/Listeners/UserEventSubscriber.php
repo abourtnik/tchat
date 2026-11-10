@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Authenticated;
-use Illuminate\Events\Dispatcher;
 
 class UserEventSubscriber
 {
@@ -18,17 +17,5 @@ class UserEventSubscriber
             'connected' => true,
             'user_agent' => request()->userAgent()
         ]);
-    }
-
-    /**
-     * Register the listeners for the subscriber.
-     *
-     * @return array<string, string>
-     */
-    public function subscribe(Dispatcher $events): array
-    {
-        return [
-            Authenticated::class => 'handleUserAuth',
-        ];
     }
 }

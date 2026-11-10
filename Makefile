@@ -28,7 +28,6 @@ update: ## Update application
 	composer install --optimize-autoloader --no-dev
 	php artisan migrate --force
 	php artisan optimize
-	php artisan cache:clear
 
 install: ## Install application
 	cp .env.example .env
